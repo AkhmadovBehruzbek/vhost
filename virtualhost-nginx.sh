@@ -1,6 +1,6 @@
 #!/bin/bash
 ### Set Language
-TEXTDOMAIN=virtualhost
+TEXTDOMAIN=vhost
 
 ### Set default parameters
 action=$1
