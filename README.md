@@ -1,81 +1,62 @@
-Virtualhost Manage Script
+Virtualhost Managing Bash Script
 ===========
 
-Bash Script to allow create or delete apache/nginx virtual hosts on Ubuntu on a quick way.
+Bu Bash Script sizga apache/nginx yangi local domen(virtual hosts) yaratish va o'chirish amallarini bir qator buyruq bilan bajarishga yordam beradi.
+Ubuntu uchun.
 
-## Installation ##
+## O'rnatish ##
 
-1. Download the script
-2. Apply permission to execute:
+1. Scriptni yuklab oling.
+2. Kerakli buyruqlarni bajarishi uchun unga huquq bering:
 
 ```
-$ chmod +x /path/to/virtualhost.sh
+$ chmod +x /path/to/vhost.sh
 ```
 
-3. Optional: if you want to use the script globally, then you need to copy the file to your /usr/local/bin directory, is better
-if you copy it without the .sh extension:
+3. Tanlovli: Agar siz scriptni global muhitda ishlatmoqchi bo'lsangiz, unda bu faylni /usr/local/bin papkaga ko'chiring, is better
+Agar .sh formatsiz nusxalasangiz qulay bo'ladi:
 
 ```bash
-$ sudo cp /path/to/virtualhost.sh /usr/local/bin/virtualhost
+$ sudo cp /path/to/vhost.sh /usr/local/bin/vhost
 ```
 
-### For Global Shortcut ###
+
+## Foydalanish ##
+
+Asosiy buyruq sintaksis:
 
 ```bash
-$ cd /usr/local/bin
-$ wget -O virtualhost https://raw.githubusercontent.com/RoverWire/virtualhost/master/virtualhost.sh
-$ chmod +x virtualhost
-$ wget -O virtualhost-nginx https://raw.githubusercontent.com/RoverWire/virtualhost/master/virtualhost-nginx.sh
-$ chmod +x virtualhost-nginx
+$ sudo sh /path/to/vhost.sh [create | delete] [domain] [optional host_dir]
 ```
 
-## Usage ##
-
-Basic command line syntax:
+/usr/local/bin ga o'rnatilganda
 
 ```bash
-$ sudo sh /path/to/virtualhost.sh [create | delete] [domain] [optional host_dir]
+$ sudo vhost [create | delete] [domain] [optional host_dir]
 ```
 
-With script installed on /usr/local/bin
+### Misol uchun ###
+
+Yangi virtual host yaratish uchun:
 
 ```bash
-$ sudo virtualhost [create | delete] [domain] [optional host_dir]
+$ sudo vhost create mysite.dev
 ```
-
-### Examples ###
-
-to create a new virtual host:
+Yangi virtual hostni o'zingiz xohlagan papka yo'naltirmoqchi bo'lsangiz:
 
 ```bash
-$ sudo virtualhost create mysite.dev
+$ sudo vhost create anothersite.dev my_dir
 ```
-to create a new virtual host with custom directory name:
+Virtual host ni o'chirish uchun
 
 ```bash
-$ sudo virtualhost create anothersite.dev my_dir
-```
-to delete a virtual host
-
-```bash
-$ sudo virtualhost delete mysite.dev
+$ sudo vhost delete mysite.dev
 ```
 
-to delete a virtual host with custom directory name:
+Maxsus papkaga o'rnatilgan virtual host o'chirmoqchi bo'lsangiz:
 
 ```
-$ sudo virtualhost delete anothersite.dev my_dir
-```
-### Localization
-
-For Apache:
-
-```bash
-$ sudo cp /path/to/locale/<language>/virtualhost.mo /usr/share/locale/<language>/LC_MESSAGES/
+$ sudo vhost delete anothersite.dev my_dir
 ```
 
-For NGINX:
-
-```bash
-$ sudo cp /path/to/locale/<language>/virtualhost-nginx.mo /usr/share/locale/<language>/LC_MESSAGES/
-```
+#Happy coding!
