@@ -17,19 +17,19 @@ sitesAvailabledomain=$sitesAvailable$domain.conf
 ### don't modify from here unless you know what you are doing ####
 
 if [ "$(whoami)" != 'root' ]; then
-	echo $"You have no permission to run $0 as non-root user. Use sudo"
+	echo $"Sizda $0 ni  as non-root foydalanuvchi sifatida ishga tushirish uchun huquq mavjud emas. sudo dan foydalaning."
 		exit 1;
 fi
 
 if [ "$action" != 'create' ] && [ "$action" != 'delete' ]
 	then
-		echo $"You need to prompt for action (create or delete) -- Lower-case only"
+		echo $"Siz tasdiqlashingiz kerak (create or delete) -- Lower-case only"
 		exit 1;
 fi
 
 while [ "$domain" == "" ]
 do
-	echo -e $"Please provide domain. e.g.dev,staging"
+	echo -e $"Iltimos domen nomi kiriting. e.g.dev,staging"
 	read domain
 done
 
@@ -48,7 +48,7 @@ if [ "$action" == 'create' ]
 	then
 		### check if domain already exists
 		if [ -e $sitesAvailabledomain ]; then
-			echo -e $"This domain already exists.\nPlease Try Another one"
+			echo -e $"Bu domen mavjud.\nIltimos boshqa kiriting. "
 			exit;
 		fi
 
@@ -61,10 +61,10 @@ if [ "$action" == 'create' ]
 			### write test file in the new domain dir
 			if ! echo "<?php echo phpinfo(); ?>" > $rootDir/phpinfo.php
 			then
-				echo $"ERROR: Not able to write in file $rootDir/phpinfo.php. Please check permissions"
+				echo $"Xatolik: $rootDir/phpinfo.php ga yozolmayapman. Menga huquq bering."
 				exit;
 			else
-				echo $"Added content to $rootDir/phpinfo.php"
+				echo $"$rootDir/phpinfo.php ga test kodi yozildi."
 			fi
 		fi
 
@@ -88,19 +88,19 @@ if [ "$action" == 'create' ]
 			CustomLog /var/log/apache2/$domain-access.log combined
 		</VirtualHost>" > $sitesAvailabledomain
 		then
-			echo -e $"There is an ERROR creating $domain file"
+			echo -e $"$domain faylini yaratish xatolik yuz berdi."
 			exit;
 		else
-			echo -e $"\nNew Virtual Host Created\n"
+			echo -e $"\nYangi Virtualhost domen yaratildi.\n"
 		fi
 
 		### Add domain in /etc/hosts
 		if ! echo "127.0.0.1	$domain" >> /etc/hosts
 		then
-			echo $"ERROR: Not able to write in /etc/hosts"
+			echo $"Xatolik: /etc/hosts ga yozolmayapman."
 			exit;
 		else
-			echo -e $"Host added to /etc/hosts file \n"
+			echo -e $"Host nomi /etc/hosts fayliga yozildi. \n"
 		fi
 
 		### Add domain in /mnt/c/Windows/System32/drivers/etc/hosts (Windows Subsytem for Linux)
@@ -108,9 +108,9 @@ if [ "$action" == 'create' ]
 		then
 			if ! echo -e "\r127.0.0.1       $domain" >> /mnt/c/Windows/System32/drivers/etc/hosts
 			then
-				echo $"ERROR: Not able to write in /mnt/c/Windows/System32/drivers/etc/hosts (Hint: Try running Bash as administrator)"
+				echo $"Xatolik: /mnt/c/Windows/System32/drivers/etc/hosts fayliga yozolmayapman. (Yechim: administrator Bash|CMD ni administrator huuqi bilan ishlatib ko'ring)"
 			else
-				echo -e $"Host added to /mnt/c/Windows/System32/drivers/etc/hosts file \n"
+				echo -e $"Host added to /mnt/c/Windows/System32/drivers/etc/hosts ga yangi host qo'shildi. \n"
 			fi
 		fi
 
@@ -132,12 +132,12 @@ if [ "$action" == 'create' ]
 		/etc/init.d/apache2 reload
 
 		### show the finished message
-		echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
+		echo -e $"Tugatildi! \n Yangi Virtual Host yaratdingiz. \nYangi host manzili: http://$domain \n va u $rootDir  manzilda."
 		exit;
 	else
 		### check whether domain already exists
 		if ! [ -e $sitesAvailabledomain ]; then
-			echo -e $"This domain does not exist.\nPlease try another one"
+			echo -e $"Bu domen mavjud emas.\nIltimos boshqasini urinib ko'ring."
 			exit;
 		else
 			### Delete domain in /etc/hosts
@@ -169,15 +169,15 @@ if [ "$action" == 'create' ]
 			if [ "$deldir" == 'y' -o "$deldir" == 'Y' ]; then
 				### Delete the directory
 				rm -rf $rootDir
-				echo -e $"Directory deleted"
+				echo -e $"Papka o'chirildi."
 			else
-				echo -e $"Host directory conserved"
+				echo -e $"Host papkasi himoyalandi."
 			fi
 		else
-			echo -e $"Host directory not found. Ignored"
+			echo -e $"Host papkasi topilmadi. Otkazibi yuborildi."
 		fi
 
 		### show the finished message
-		echo -e $"Complete!\nYou just removed Virtual Host $domain"
+		echo -e $"Tugatildi!\nSiz $domain ni o'chirdingiz!"
 		exit 0;
 fi
