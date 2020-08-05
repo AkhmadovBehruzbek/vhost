@@ -23,7 +23,7 @@ fi
 
 if [ "$action" != 'create' ] && [ "$action" != 'delete' ]
 	then
-		echo $"Siz tasdiqlashingiz kerak (create or delete) -- Lower-case only"
+		echo $"vhost amal tanlang(create or delete) -- ~~kichkina harflar bilan yozing~~"
 		exit 1;
 fi
 
